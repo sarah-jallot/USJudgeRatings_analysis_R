@@ -141,26 +141,26 @@ $E(\hat\theta_{MLE}) =E(\frac{1}{n}\sum_{i=1}^{n}X_i)$
 $E(\hat\theta_{MLE}) = \frac{1}{n}\sum_{i=1}^{n}E(X_i)$ by linearity of the expectation  
 $E(\hat\theta_{MLE}) = \frac{1}{n}*n\theta$ $E(\hat\theta_{MLE}) = \theta$  
 So, $\hat\theta_{MLE}$ is an unbiased estimator of $\theta$ and $b^\star(\hat\theta_{MLE}) = 0$.  
-ii) Computation of the variance:  
+ii. Computation of the variance:  
 $Var^*(\hat\theta_{MLE}) = Var^*(\frac{1}{n}\sum_{i=1}^{n}X_i)$  
 $Var^*(\hat\theta_{MLE}) = \frac{1}{n^2}\sum_{i=1}^{n}Var(X_i)$ because the $X_i$s are i.i.d.  
 $Var^*(\hat\theta_{MLE}) = \frac{\theta}{n}$  
-iii) Computation of the quadratic risk of $\hat\theta_{MLE}$.  
+iii. Computation of the quadratic risk of $\hat\theta_{MLE}$.  
 $risk = b^*(\hat\theta)^2 + Var^*(\hat\theta)$  
 $risk = 0 + \frac{\theta}{n}$  
   
 ### Question 12.  
 Cramer-Rao bound for $\hat\theta_{MLE}$:  
 i. Let's compute $L''(x_1,x_2,...x_n)$.  
-$L'(x_1,x_2,...x_n) = -n + \frac{1}{\theta}*\sum_{i=1}^{n} x_i$  
-$\iff L''(x_1,x_2,...x_n) = -\frac{1}{\theta^2}*\sum_{i=1}^{n} x_i$  
+$L'(x_1,x_2,...x_n) = -n + \frac{1}{\theta}\sum_{i=1}^{n} x_i$  
+$\iff L''(x_1,x_2,...x_n) = -\frac{1}{\theta^2}\sum_{i=1}^{n} x_i$  
 ii. So, we get:  
-$I(\theta) =E(-L''(X_1,X_2,...,X_n)$  
-$\iff E(-L''(X_1,X_2,...,X_n))= E(\frac{1}{\theta^2}*\sum_{i=1}^{n} X_i))$  
-$\iff E(-L''(X_1,X_2,...,X_n)) = \frac{n*\theta}{\theta^2}$  
-$\iff E(-L''(X_1,X_2,...,X_n)) = \frac{n}{\theta}$  
+$I(\theta) =E^*(-L''(X_1,X_2,...,X_n)$  
+$\iff E^*(-L''(X_1,X_2,...,X_n))= E(\frac{1}{\theta^2}\sum_{i=1}^{n} X_i))$  
+$\iff E^*(-L''(X_1,X_2,...,X_n)) = \frac{n\theta}{\theta^2}$  
+$\iff E^*(-L''(X_1,X_2,...,X_n)) = \frac{n}{\theta}$  
 So, the variance of any unbiased estimator of $\theta$ will always be superior to $\frac{\theta}{n}$ using Fisher's theorem.  
-So, by Fisher, $\hat\theta_1$ is the estimator of $\theta$ with minimal variance over all unbiased estimators as its variance is equal to the Cramer Rao bound.  
+So, by Fisher, $\hat\theta_1$ is an efficient estimator of $\theta$: it is the estimator with minimal variance over all unbiased and linear estimators as its variance is equal to the Cramer Rao bound. 
   
 ### Question 13.  
 We have:  

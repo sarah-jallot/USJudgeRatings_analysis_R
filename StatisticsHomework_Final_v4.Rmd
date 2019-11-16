@@ -221,7 +221,7 @@ $E(\hat\theta_2)-\theta=-\frac{\theta}{n}\iff1E(\frac{n\hat\theta_2}{n-1})=\thet
 Then, we can use $\frac{(n)\hat\theta_2}{n-1}$ to get an unbiased estimator of $\theta$.  
 
 ### Question 15.  
-We know thanks to the decomposition in q)13 that:  
+a. We know thanks to the decomposition in q)13 that:  
 $\hat\theta_2 =\frac{1}{n}*\sum_{k=1}^{n} (X_i-\theta)^2-(\theta -\overline{X_n})^2$  
 i. We first note that $\overline{X_n} \rightarrow \theta$ in probability.  
 So, as $g:x\longrightarrow (x-\theta)$ is continuous on $R$, we get that $(\overline{X_n}-\theta) \rightarrow 0$ in probability.  
@@ -233,7 +233,7 @@ However we know from the course that convergence in law to a constant implies co
 iv. Finally, by Slutsky, we obtain that:  $A = \sqrt{n}(\frac{1}{n}\sum_{k=1}^{n}(X_i-\hat\theta)^2 - \theta) - \sqrt{n}(\frac{1}{n}\sum_{i=1}^{n}{X_i} - \theta)(\overline X - \theta)$ converges to $\mathcal{N}(0,2\theta^2 + \theta)$ when $n\to\infty$. 
 We now just have to notice that $A = \sqrt{n}(\hat\theta_2 - \theta)$. So, we get that $\sqrt{n}(\hat\theta_2 - \theta)$ converges to $\mathcal{N}(0,2\theta^2 + \theta)$ when $n\to\infty$. 
 
-Asymptotic confidence interval for $\hat\theta_2$:  
+b. Asymptotic confidence interval for $\hat\theta_2$:  
 According to previous computation, we know that $\sqrt{n}(\hat\theta_2 - \theta)$ converges to $\mathcal{N}(0,2\theta^2 + \theta)$ when $n\to\infty$. 
   
 Also, we know that $\hat\theta_{ML}$ converges in probabilty to $\theta$.  
@@ -245,14 +245,17 @@ $\frac{\sqrt{n}(\hat\theta_2 - \theta)}{\sqrt{2(\hat\theta_{ML})^2+\hat\theta_{M
 $lim_{n\to\infty}P(-q_{1-\alpha/2}\le \frac{\sqrt{n}(\hat\theta_2 - \theta)}{\sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}} \le q_{1-\alpha/2})=1-\alpha$ where $q_{1-\alpha/2}$ is the quantile of the standard normal distribution at level $\alpha$.  
 We easily obtain: $lim_{n\to\infty}P(-q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}} \le \sqrt{n}(\hat\theta_2 - \theta) \le q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}) =1-\alpha$  
 And then: $lim_{n\to\infty}P(\hat\theta_2 -\frac{q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}}{\sqrt{n}} \le \theta \le \hat\theta_2 +\frac{q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}}{\sqrt{n}}) =1-\alpha$ 
-
 Thus, an asymptotic confidence interval for $\theta$ at level $\alpha$ is $IC(\alpha)=[A_n,B_n]$ where:  
 $A_n=\hat\theta_2 -\frac{q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}}{\sqrt{n}}$  
 $B_n=\hat\theta_2 +\frac{q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}}{\sqrt{n}}$.  
-
-Comment on this interval: xx  
-Compare the asymptotic variance to the one of MLE and to the Cramer Rao bound. What can you say?    
   
+c. Comment on this interval: We note that $\hat\theta_2$ is a biased estimator of $\theta$ of bias $\frac\{theta}{n}$.  
+So any interval centered around $\hat\theta_2$ shall be less reliable than an interval centered around the unbiased estimator $\hat\theta_1$. Secondly we are using two different estimators in our confidence interval, which confirms that this interval is less reliable than the ones previously found.  
+Use it to confirm the first intervals, and only for a very big n.  
+  
+d. Compare the asymptotic variance to the one of the MLE and to the Cramer Rao bound. What can you say?    
+From the Cramer-Rao bound theorem, we derive that the variance of $\hat\theta_2$ is necessarily bigger than $\frac{theta}{n}$, which is the Cramer-Rao bound and the variance of $\hat\theta_{ML}$.  
+
 ### Question 16.   
 i. Computing the moment generating function. We have:  
 $E(e^{sX}) = \exp(-\theta)\sum_{k=0}^{\infty }e^{sk} \frac{\theta^k}{k!}$
@@ -580,11 +583,8 @@ Albeit imperfect, we know that ORAL is approximately the best unique variable ex
 Given that our features are very highly correlated, when fitting our model, we can assume leaving some out will marginally affect model performance.  
 Performing PCA on our dataset, then looking at the proportion of variance explained, allows us to confirm our assumption and quantify how many features are useful to use. 
 ```{r}
-new_my_data = USJudgeRatings
-
-# Divide the new data
-pca.train = new_my_data[1:43,]
-
+# Divide the data
+pca.train = USJudgeRatings[1:43,]
 # 
 prin_comp = prcomp(pca.train, scale. = T)
 
@@ -619,7 +619,7 @@ Above 5-6 features, adding a feature brings along no significant improvement.
   
 6. The best single variable expaining RTEN, the final grade on which our decision will be based, is ORAL. The second best variable is PREP, but it doesn't mean that it will be included in our model if we use forward selection (forward selection looks at the efficiency of a combination of features).  
   
-7. PCA analysis would indicate that if we use linear regression, fitting a model with 5 features would be a good decision already (to be confirmed in our bonus section!)
+7. PCA analysis would indicate that if we use linear regression, fitting a model with 5 features would be a very good decision already (to be confirmed in our bonus section!)
 ```{r message=FALSE}
 library(DataExplorer, verbose = FALSE) 
 library(lmtest, verbose = FALSE)
@@ -637,7 +637,7 @@ library(MASS, verbose = FALSE)
 full.model <- lm(RTEN ~., data = USJudgeRatings)
 summary(full.model)
 # Fast forward selection with 5 features
-models <- regsubsets(RTEN~., data = USJudgeRatings, nvmax = 5,
+models = regsubsets(RTEN~., data = USJudgeRatings, nvmax = 5,
                      method = "forward")
 summary(models)
 # Creating the model with the 5 features selected by forward regression.  
@@ -649,8 +649,8 @@ So, both models have a very good fit, but the forward selection model with 5 var
 
 
 Our standardised residuals are in between 0.6 and 1.0 approximately (well within the [-2,2] range), which means that homsedasticity is a priori verified. 
-
-We could choose the log of the sqrt of RTEN to smooth the outliers. The next step would be to determine a classifier derived from RTEN, but that is not the objective of our exercise.  
+We could choose the log of the sqrt of RTEN to smooth the outliers.  
+The next step would be to determine a classifier derived from RTEN, but that is not the objective of our exercise.  
 
 
   

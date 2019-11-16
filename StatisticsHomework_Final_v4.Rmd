@@ -498,9 +498,6 @@ qqline(USJudgeRatings[,name])}
 1. We do not expect a perfect match given that n = 43 is relatively small. However, we observe that our samples fit the Normal distribution quite well.  
 2. RTEN, the grade we consider dependent on the others, fit the normal law less well than the others.  
 3. PHYS is the variable that fits the least with a normal law. Given that we have a certain number of outliers and they are far from the mean, to the left, we can explain these results.  
-```{r}
-Corr
-```
   
 #### 4) Focused multivariate analysis: some interesting combinations to study correlations.  
 1. ORAL vs WRIT (corr = 0.99), ORAL vs FAMI (corr = 0.98) : very highly correlated variables.  
@@ -561,7 +558,35 @@ box()
 legend( 'topleft', fill = c(rgb(0,0,1,0.5), rgb(0.5,1,0,0.5)), legend = c('RTEN', 'PREP'))
 ```
 Albeit imperfect, we know that ORAL is approximately the best unique variable explaining RTEN. Indeed, its distribution is close to that of RTEN, and closer than the second best unique variable (except WRIT), PREP.  
-  
+#### 5) PCA component analysis.
+Given that our features are very highly correlated, when fitting our model, we can assume leaving some out will marginally affect model performance.  
+Performing PCA on our dataset, then looking at the proportion of variance explained, allows us to confirm our assumption and quantify how many features are useful to use. 
+```{r}
+new_my_data = USJudgeRatings
+
+# Divide the new data
+pca.train = new_my_data[1:43,]
+
+# 
+prin_comp = prcomp(pca.train, scale. = T)
+
+# Compute standard deviation of each principal component
+std_dev = prin_comp$sdev
+
+# Compute variance
+pr_var = std_dev^2
+prop_varex = pr_var/sum(pr_var)
+
+# Cumulative scree plot
+plot(cumsum(prop_varex), xlab = "Principal Component",
+              ylab = "Cumulative Proportion of Variance Explained",
+              type = "b")
+abline(h=1,col='red')
+abline(h=0.9365,col='red')
+```
+We note that 2 components already explain approximately 94% of the variance!  
+Above 5-6 features, adding a feature brings along no significant improvement. 
+
 ### Conclusion  
 1. We examined a dataset of grades given by lawyers to US Superior Court judges of which we will assume that the objective is to determine whether these judges were fit to retain, or not (it could've been which ones need training, for instance).  
   

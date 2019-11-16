@@ -514,7 +514,8 @@ qqline(USJudgeRatings[,name])}
 ```
 1. We do not expect a perfect match given that n = 43 is relatively small. However, we observe that our samples fit the Normal distribution quite well.  
 2. RTEN, the grade we consider dependent on the others, fit the normal law less well than the others.  
-3. PHYS is the variable that fits the least with a normal law. Given that we have a certain number of outliers and they are far from the mean, to the left, we can explain these results.  
+3. PHYS is the variable that fits the least with a normal law. Given that we have a certain number of outliers and they are far from the mean, to the left, we will consider that we are in an exceptional case where we found several significant outliers for PHYS, but we maintain the normal distribution assumption.  
+4. Except from the 10.6 outlier which we would a priori discard, CONT fits the normal distribution pretty well.  
   
 #### 4) Focused multivariate analysis: some interesting combinations to study correlations.  
 1. ORAL vs WRIT (corr = 0.99), ORAL vs FAMI (corr = 0.98) : very highly correlated variables.  
@@ -618,7 +619,7 @@ Above 5-6 features, adding a feature brings along no significant improvement.
   
 6. The best single variable expaining RTEN, the final grade on which our decision will be based, is ORAL. The second best variable is PREP, but it doesn't mean that it will be included in our model if we use forward selection (forward selection looks at the efficiency of a combination of features).  
   
-7. 
+7. PCA analysis would indicate that if we use linear regression, fitting a model with 5 features would be a good decision already (to be confirmed in our bonus section!)
 ```{r message=FALSE}
 library(DataExplorer, verbose = FALSE) 
 library(lmtest, verbose = FALSE)

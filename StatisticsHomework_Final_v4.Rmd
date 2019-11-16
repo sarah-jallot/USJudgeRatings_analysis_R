@@ -378,7 +378,8 @@ In this section of our report, the main idea is to deduce a probabilistic settin
 ```{r}
 # Plotting the boxplots horizontally because it makes it easier to 
 # compare their medians and dispersion. 
-boxplot(USJudgeRatings, las = 2, horizontal = TRUE)
+bxpdat = boxplot(USJudgeRatings, las = 2, horizontal = TRUE)
+
 # Plotting the mean of the median values to make any distance to it more visible
 a = mean(c(7.3,8.1,7.7,7.8,7.6,7.7,7.7,7.6,7.5,7.6,8.1,7.8))
 abline(v=a, col = 'red')
@@ -436,7 +437,23 @@ print(c(name,k))}
 ```
   
 Kurtosis analysis confirms that outliers PHYS (kurt = 2.2 >>1) and CONT (kurt = 1.5 > 1) outliers are significantly far from the mean, as observed on the boxplot.  
-
+Let's try to remove extreme outliers from both and have a look at the kurtosis for CONT and PHYS. 
+```{r}
+# First identifying the outliers, then manually getting their row as the dataset is small
+USJudgeRatings[USJudgeRatings$CONT==10.600,]
+USJudgeRatings[USJudgeRatings$PHYS<=6,]
+```
+```{r}
+k = kurtosis(USJudgeRatings[c(1:6,8:43),"CONT"])
+print(c("CONT",k))
+```
+  
+This seems to confirm our intuition that the 10.6 value we observed for CONT is a reporting mistake : removing it alone drops kurtosis drastically. 
+```{r}
+k = kurtosis(USJudgeRatings[c(1:4,6:22,24:43),"PHYS"])
+print(c("PHYS",k))
+```
+Removing the two outliers for PHYS drops kurtosis significantly. However, ~5/10 for physical shape doesn't seem like a shocking value, so it doesn't mean we should necessarily remove these outliers. 
 ```{r message=FALSE}
 library(corrplot)
 library(ggplot2)
@@ -581,8 +598,10 @@ prop_varex = pr_var/sum(pr_var)
 plot(cumsum(prop_varex), xlab = "Principal Component",
               ylab = "Cumulative Proportion of Variance Explained",
               type = "b")
-abline(h=1,col='red')
-abline(h=0.9365,col='red')
+abline(h=1,col='black')
+abline(h=0.9364709,col='red')
+abline(h=0.9924043,col='red')
+
 ```
 We note that 2 components already explain approximately 94% of the variance!  
 Above 5-6 features, adding a feature brings along no significant improvement. 

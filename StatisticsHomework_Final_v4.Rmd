@@ -249,12 +249,12 @@ Thus, an asymptotic confidence interval for $\theta$ at level $\alpha$ is $IC(\a
 $A_n=\hat\theta_2 -\frac{q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}}{\sqrt{n}}$  
 $B_n=\hat\theta_2 +\frac{q_{1-\alpha/2} \sqrt{2(\hat\theta_{ML})^2+\hat\theta_{ML}}}{\sqrt{n}}$.  
   
-c. Comment on this interval: We note that $\hat\theta_2$ is a biased estimator of $\theta$ of bias $\frac\{theta}{n}$.  
+c. Comment on this interval: We note that $\hat\theta_2$ is a biased estimator of $\theta$ of bias $\frac{theta}{n}$.  
 So any interval centered around $\hat\theta_2$ shall be less reliable than an interval centered around the unbiased estimator $\hat\theta_1$. Secondly we are using two different estimators in our confidence interval, which confirms that this interval is less reliable than the ones previously found.  
 Use it to confirm the first intervals, and only for a very big n.  
   
 d. Compare the asymptotic variance to the one of the MLE and to the Cramer Rao bound. What can you say?    
-From the Cramer-Rao bound theorem, we derive that the variance of $\hat\theta_2$ is necessarily bigger than $\frac{theta}{n}$, which is the Cramer-Rao bound and the variance of $\hat\theta_{ML}$.  
+
 
 ### Question 16.   
 i. Computing the moment generating function. We have:  
@@ -604,6 +604,7 @@ abline(h=0.9364709,col='red')
 abline(h=0.9924043,col='red')
 
 ```
+  
 We note that 2 components already explain approximately 94% of the variance!  
 Above 5-6 features, adding a feature brings along no significant improvement. 
 
